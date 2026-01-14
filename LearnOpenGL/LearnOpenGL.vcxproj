@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\three\OneDrive\Documents\Homework\cs455\LearnOpenGL\Directories\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\three\OneDrive\Documents\Homework\cs455\LearnOpenGL\Directories\Libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Directories\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Directories\Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
