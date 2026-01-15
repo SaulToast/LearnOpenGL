@@ -1,24 +1,18 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void CheckShaderCompile(unsigned int shader, const char* name);
+std::string LoadShaderFile(const std::string& path);
 
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
 
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\0";
+const char* vertexShaderSource;
+const char* fragmentShaderSource;
 
 
 int main() 
@@ -61,6 +55,12 @@ int main()
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	std::string vertSrc = LoadShaderFile("shaders/TestShader.vert");
+	std::string fragSrc = LoadShaderFile("shaders/TestShader.frag");
+
+	vertexShaderSource = vertSrc.c_str();
+	fragmentShaderSource = fragSrc.c_str();
 
 	// vert shader setup
 	unsigned int vertexShader;
@@ -152,4 +152,12 @@ void CheckShaderCompile(unsigned int shader, const char* name)
 		std::cout << "Shader compile error (" << name << "):\n" << infoLog << std::endl;
 	}
 
+}
+
+std::string LoadShaderFile(const std::string& path)
+{
+	std::ifstream file(path);
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	return buffer.str();
 }
